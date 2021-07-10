@@ -82,8 +82,8 @@ jobs:
       if: steps.download.outputs.status == 'success' && env.PACKAGE_OP_SCRIPT == 'ophub' && !cancelled()
       with:
         armvirt64_path: openwrt/bin/targets/*/*/*.tar.gz
-        amlogic_openwrt: s905x3_s905x2_s905x_s905d_s922x_s912
-        amlogic_kernel: 5.12.15_5.4.130
+        amlogic_openwrt: s905d
+        amlogic_kernel: 5.4.130
         amlogic_size: 1024
 
     - name: Package Armvirt as OpenWrt use Flippy script
