@@ -164,7 +164,7 @@ jobs:
         tag_name: openwrt_armvirt_n1_zy_${{ env.PACKAGED_OUTPUTDATE }}
         files: ${{ env.PACKAGED_OUTPUTPATH }}/*
         body: |
-          This is OpenWrt firmware for N1-jingjian
+          This is OpenWrt firmware for N1-精简自用版
           * Firmware information
           Default IP: 192.168.3.88
           Default username: root
