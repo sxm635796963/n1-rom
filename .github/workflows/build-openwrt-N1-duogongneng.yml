@@ -164,12 +164,12 @@ jobs:
         tag_name: openwrt_armvirt_n1_lede_${{ env.PACKAGED_OUTPUTDATE }}
         files: ${{ env.PACKAGED_OUTPUTPATH }}/*
         body: |
-          This is OpenWrt firmware for N1-多功能版
-          * Firmware information
+          N1盒子-多功能版(docker版）
+          * 固件信息
           Default IP: 192.168.3.88
           Default username: root
           Default password: password
           Default WIFI name: OpenWrt
           Default WIFI password: none
-          Install command: cd /root && chmod +x install*.sh && ./install*.sh
+          写入emmc命令: cd /root && chmod +x install*.sh && ./install*.sh
 
