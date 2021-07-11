@@ -1,5 +1,5 @@
 #========================================================================================================================
-# https://github.com/ophub/op
+# https://github.com/cocokfeng/op
 # Description: Use Releases file to packaging
 # Cron: min (0 - 59) / hour (0 - 23) / day of month (1 - 31) / month (1 - 12) / day of week (0 - 6)(Sunday - Saturday)
 #========================================================================================================================
@@ -15,9 +15,9 @@ on:
         required: false
         default: 'false'
       packagerepo:
-        description: 'Package repo: ophub / flippy'
+        description: 'Package repo: cocokfeng / flippy'
         required: false
-        default: 'ophub'
+        default: 'cocokfeng'
   #schedule:
     #- cron: '0 22 * * *'
 
@@ -46,14 +46,14 @@ jobs:
         sudo -E apt-get -qq autoremove --purge
         sudo -E apt-get -qq clean
         sudo timedatectl set-timezone "$TZ"
-        ARR_BRANCH=("ophub" "flippy")
+        ARR_BRANCH=("cocokfeng" "flippy")
         if  [[ -n "${{ github.event.inputs.packagerepo }}" && -n "$(echo "${ARR_BRANCH[@]}" | grep -w "${{ github.event.inputs.packagerepo }}")" ]]; then
             PACKAGE_OP_SCRIPT=${{ github.event.inputs.packagerepo }}
         else
-            PACKAGE_OP_SCRIPT=ophub
+            PACKAGE_OP_SCRIPT=cocokfeng
         fi
         echo "PACKAGE_OP_SCRIPT=${PACKAGE_OP_SCRIPT}" >> $GITHUB_ENV
-        if  [[ "${PACKAGE_OP_SCRIPT}" == "ophub" ]]; then
+        if  [[ "${PACKAGE_OP_SCRIPT}" == "cocokfeng" ]]; then
             RELEASES_BRANCH="s9xxx"
         else
             RELEASES_BRANCH="n1_lede"
@@ -77,9 +77,9 @@ jobs:
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
 
-    - name: Package Armvirt as OpenWrt use Ophub script
-      uses: ophub/amlogic-s9xxx-openwrt@main
-      if: steps.download.outputs.status == 'success' && env.PACKAGE_OP_SCRIPT == 'ophub' && !cancelled()
+    - name: Package Armvirt as OpenWrt use cocokfeng script
+      uses: cocokfeng/n1-rom@main
+      if: steps.download.outputs.status == 'success' && env.PACKAGE_OP_SCRIPT == 'cocokfeng' && !cancelled()
       with:
         armvirt64_path: openwrt/bin/targets/*/*/*.tar.gz
         amlogic_openwrt: s905d
@@ -87,7 +87,7 @@ jobs:
         amlogic_size: 1024
 
     - name: Package Armvirt as OpenWrt use Flippy script
-      uses: ophub/flippy-openwrt-actions@main
+      uses: cocokfeng/flippy-openwrt-actions@main
       if: steps.download.outputs.status == 'success' && env.PACKAGE_OP_SCRIPT == 'flippy' && !cancelled()
       env:
         OPENWRT_ARMVIRT: openwrt/bin/targets/*/*/*.tar.gz
