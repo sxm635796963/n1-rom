@@ -9,4 +9,3 @@ N1-ROM 7月11尝试改用云编译系统，以后每天自动更新。你也可�
 - [Lienol/openwrt](https://github.com/Lienol/openwrt)
 - [unifreq/openwrt_packit](https://github.com/unifreq/openwrt_packit)
 
-# n1-rom
