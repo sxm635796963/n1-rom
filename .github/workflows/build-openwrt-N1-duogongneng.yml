@@ -172,6 +172,6 @@ jobs:
           Default WIFI name: OpenWrt
           Default WIFI password: none
           主要插件：passwall/广告屏蔽大师/微信推送/KMS/多拨/可道云/Zerotier/SQM/upnp/上网时间控制
-            比精简自用版主要增加：ddns/adguardhome/aria2/dnsfilter/docker/frps/可道云/ssr-plus/TTYD/网络唤醒等
+            比精简自用版主要增加：ddns/adguardhome/aria2/dnsfilter/docker/frps/ssr-plus/TTYD/网络唤醒等
           写入emmc命令: openwrt-install 或/root/install-to-emmc.sh
 
