@@ -10,7 +10,7 @@ on:
   repository_dispatch:
   workflow_dispatch:
   schedule:
-    - cron: '0 23 * * *'
+    - cron: '0 21 * * *'
 
 env:
   DELETE_RELEASE: true
