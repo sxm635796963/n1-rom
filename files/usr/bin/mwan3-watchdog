@@ -1,0 +1,63 @@
+#!/bin/bash
+. /lib/functions.sh
+	wannum=$(uci get syncdial.config.wannum)
+	function LoggetSize()
+{
+	if [ ! -f "$1" ]; then
+	Size=0
+	Max=$((1024*$2))
+		echo "LogFile is not exist!"
+	else
+		Size=`ls -l $1 | awk '{ print $5 }'`
+		Max=$((1024*$2))
+		if [ $Size -ge $Max ]; then
+			cat /dev/null > $1
+		fi
+	fi 
+}
+function NowTimeget()
+{
+	NowTime=$(date "+%Y-%m-%d %H:%M:%S")
+}
+LogMax=10240
+LogFile="/var/mwan3-watchdog.log"
+LoggetSize $LogFile $LogMax
+for ((k=1; k<=3; k++))
+do 
+  olnum=$(mwan3 status | grep -c "is online and tracking is active")
+	if [[ $olnum -lt $wannum ]]
+	then
+	NowTimeget
+	echo "$NowTime---vwan is Off,restarting($k/3)---Log Size $Size/$Max" >> /var/mwan3-watchdog.log 
+	/bin/genwancfg >/dev/null 2>&1 &
+  sleep 50            
+            olnum=$(mwan3 status | grep -c "is online and tracking is active")
+            if [[ $olnum -lt $wannum ]]
+            then
+            
+              	if [[ $k -eq 3 ]]; then
+	              vannum=$(uci get syncdial.config.vannum)
+	              if [[ $vannum -eq 0 ]]; then
+	              uci set syncdial.config.vannum=1
+                uci commit syncdial
+	              NowTimeget
+	              echo "$NowTime---vwan is erro,N1 will reboot!---Log Size $Size/$Max" >> /var/mwan3-watchdog.log  
+	              sleep 5 && touch /etc/banner && reboot
+                fi
+                fi  
+            else
+            NowTimeget
+            echo "$NowTime---now,vwan is recover---Log Size $Size/$Max" >> /var/mwan3-watchdog.log 
+            /etc/init.d/shadowsocksr restart
+            sleep 20
+            break
+            fi
+  else
+  vannum=$(uci get syncdial.config.vannum)
+	 if [[ $vannum -eq 1 ]]; then
+   uci set syncdial.config.vannum=0
+   uci commit syncdial
+   fi
+   break
+  fi
+done
